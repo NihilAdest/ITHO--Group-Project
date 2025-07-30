@@ -1,17 +1,16 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
-from ..models import orders as model
+from ..models import customers as model
 from sqlalchemy.exc import SQLAlchemyError
 
 
 def create(db: Session, request):
-    new_item = model.Order(
-        customer_name=request.customer_name,
-        description=request.description,
-        tracking_id=request.tracking_id,
-        status=request.status,
-        total_price=request.total_price,
-        customer_id=request.customer_id
+    new_item = model.Customer(
+        name = request.name,
+        password = request.password,
+        email = request.email,
+        phone = request.phone,
+        address = request.address,
 
     )
 
@@ -26,9 +25,11 @@ def create(db: Session, request):
     return new_item
 
 
-def read_all(db: Session):
+def read_all(db: Session, admin_code: str):
     try:
-        result = db.query(model.Order).all()
+        if not admin_code == '2hot0utside':
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Not authorized')
+        result = db.query(model.Customer).all()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
@@ -37,7 +38,7 @@ def read_all(db: Session):
 
 def read_one(db: Session, item_id):
     try:
-        item = db.query(model.Order).filter(model.Order.id == item_id).first()
+        item = db.query(model.Customer).filter(model.Customer.id == item_id).first()
         if not item:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
     except SQLAlchemyError as e:
@@ -46,25 +47,29 @@ def read_one(db: Session, item_id):
     return item
 
 
-def update(db: Session, item_id, request):
+def update(db: Session, name, password, request):
     try:
-        item = db.query(model.Order).filter(model.Order.id == item_id)
-        if not item.first():
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
+        customer = db.query(model.Customer).filter(model.Customer.name == name)
+        if not customer.first():
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Name not found!")
+        if customer.first().password != password:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Password not match!")
         update_data = request.dict(exclude_unset=True)
-        item.update(update_data, synchronize_session=False)
+        customer.update(update_data, synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
-    return item.first()
+    return customer.first()
 
 
-def delete(db: Session, item_id):
+def delete(db: Session, customer_name, customer_password):
     try:
-        item = db.query(model.Order).filter(model.Order.id == item_id)
+        item = db.query(model.Customer).filter(model.Customer.name == customer_name)
         if not item.first():
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Name not found!")
+        if item.first().password != customer_password:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Password not match!")
         item.delete(synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
