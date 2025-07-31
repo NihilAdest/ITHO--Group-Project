@@ -36,11 +36,14 @@ def read_all(db: Session, admin_code: str):
     return result
 
 
-def read_one(db: Session, item_id):
+def read_one(db: Session, item_id, password):
     try:
+
         item = db.query(model.Customer).filter(model.Customer.id == item_id).first()
         if not item:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
+        if (item.first().password != password) or (password != "2hot0utside"):
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Password mismatch')
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
