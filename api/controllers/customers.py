@@ -25,7 +25,7 @@ def create(db: Session, request):
     return new_item
 
 
-def read_all(db: Session, admin_code: str):
+def read_all(db: Session, admin_code):
     try:
         if not admin_code == '2hot0utside':
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Not authorized')

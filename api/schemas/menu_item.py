@@ -1,7 +1,6 @@
 from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel
-from .order_details import OrderDetail
 
 class MenuItemBase(BaseModel):
     name: str
@@ -20,7 +19,7 @@ class MenuItemUpdate(MenuItemBase):
     calories: Optional[float] = None
     food_category: Optional[str] = None
 
-class MenuItem(MenuItemBase):
+class MenuItems(MenuItemBase):
     id: int
 
     class Config:

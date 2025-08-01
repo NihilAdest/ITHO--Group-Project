@@ -4,14 +4,14 @@ from datetime import datetime
 from ..dependencies.database import Base
 
 class MenuItem(Base):
-    __tablename__ = "menu_items"
+    __tablename__ = 'menu_items'
 
-    menu_item_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    name = Column(String)
-    description = Column(String)
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    name = Column(String(255), nullable=False)
+    description = Column(String(255), nullable=False)
     price = Column(DECIMAL(10,2))
     calories = Column(Integer)
-    food_category = Column(String)
+    food_category = Column(String(255), nullable=False)
 
     reviews = relationship("Review", back_populates="menu_item")
     order_details = relationship("OrderDetail", back_populates="menu_item")

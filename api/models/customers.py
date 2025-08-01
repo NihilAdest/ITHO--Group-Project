@@ -7,10 +7,10 @@ class Customer(Base):
     __tablename__ = 'customers'
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    name = Column(String, nullable=False)
-    password = Column(String, nullable=False)
-    email = Column(String, nullable=False)
-    phone = Column(String, nullable=False)
-    address = Column(String, nullable=False)
+    name = Column(String(255), nullable=False)
+    password = Column(String(255), nullable=False)
+    email = Column(String(255), nullable=False)
+    phone = Column(String(255), nullable=False)
+    address = Column(String(255), nullable=False)
 
     orders = relationship("Order", back_populates="customers")
