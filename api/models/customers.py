@@ -2,6 +2,7 @@ from sqlalchemy import Column, ForeignKey, Integer, String, DECIMAL, DATETIME
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from ..dependencies.database import Base
+from .orders import Order
 
 class Customer(Base):
     __tablename__ = 'customers'
@@ -13,4 +14,5 @@ class Customer(Base):
     phone = Column(String(255), nullable=False)
     address = Column(String(255), nullable=False)
 
-    orders = relationship("Order", back_populates="customers")
+    orders_by_id = relationship("Order", back_populates="customers_by_id", foreign_keys=[Order.customer_id])
+    orders_by_name = relationship("Order", back_populates="customers_by_name", foreign_keys=[Order.customer_name])

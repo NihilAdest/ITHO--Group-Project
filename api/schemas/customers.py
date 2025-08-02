@@ -19,7 +19,7 @@ class CustomerUpdate(BaseModel):
     phone: Optional[str]
     address: Optional[str]
 
-class Customer(BaseModel):
+class Customer(CustomerBase):
     id: int
 
     class Config:

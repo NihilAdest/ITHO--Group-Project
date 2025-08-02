@@ -12,6 +12,6 @@ class ResourceManagement(Base):
     current_stock = Column(DECIMAL(10,2))
     min_stock_level = Column(DECIMAL(10,2))
     cost_per_unit = Column(DECIMAL(10,2))
-    restaurant_id = Column(Integer, ForeignKey("restaurants.restaurant_id"))
+    restaurant_id = Column(Integer, ForeignKey("restaurants.id"))
 
     restaurant = relationship("Restaurant", back_populates="resources")

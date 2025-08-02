@@ -17,12 +17,12 @@ def create(request: schema.CustomerCreate, db: Session = Depends(get_db)):
 
 @router.get("/", response_model=list[schema.Customer])
 def read_all(admin_code: str, db: Session = Depends(get_db)):
-    return controller.read_all(db, admin_code=admin_code)
+    return controller.read_all(db=db, admin_code=admin_code)
 
 
 @router.get("/{item_id}", response_model=schema.Customer)
 def read_one(item_id: int, db: Session = Depends(get_db)):
-    return controller.read_one(db, item_id=item_id)
+    return controller.read_one(db=db, item_id=item_id)
 
 
 @router.put("/{item_id}", response_model=schema.Customer)

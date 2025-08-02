@@ -55,7 +55,7 @@ def update(db: Session, item_id, request):
         item.update(update_data, synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
+        error = str(getattr(e, 'orig', e))
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return item.first()
 
@@ -68,6 +68,6 @@ def delete(db: Session, item_id):
         item.delete(synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
+        error = str(getattr(e, 'orig', e))
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return Response(status_code=status.HTTP_204_NO_CONTENT)

@@ -13,4 +13,5 @@ class Payment(Base):
     transaction_status = Column(String(300))
     payment_date = Column(DATETIME, nullable=False, server_default=str(datetime.now()))
 
-    order = relationship("Order", back_populates="payments")
+    orders_by_id = relationship("Order", back_populates="payments_by_id", foreign_keys=[order_id])
+    orders_by_total_price = relationship("Order", back_populates="payments_by_total_price", foreign_keys=[amount])

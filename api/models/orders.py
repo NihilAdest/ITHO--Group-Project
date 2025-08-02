@@ -2,6 +2,7 @@ from sqlalchemy import Column, ForeignKey, Integer, String, DECIMAL, DATETIME
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from ..dependencies.database import Base
+from .payments import Payment
 
 
 class Order(Base):
@@ -17,5 +18,7 @@ class Order(Base):
     customer_id = Column(Integer, ForeignKey("customers.id"))
 
     order_details = relationship("OrderDetail", back_populates="orders")
-    customer = relationship("Customer", back_populates="order")
-    payment = relationship("Payment", back_populates="order")
+    customers_by_id = relationship("Customer", back_populates="orders_by_id", foreign_keys=[customer_id])
+    customers_by_name = relationship("Customer", back_populates="orders_by_name", foreign_keys=[customer_name])
+    payments_by_id = relationship("Payment", back_populates="orders_by_id", foreign_keys=[Payment.order_id])
+    payments_by_total_price = relationship("Payment", back_populates="orders_by_total_price", foreign_keys=[Payment.amount])
