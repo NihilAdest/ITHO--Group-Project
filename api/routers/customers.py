@@ -21,8 +21,8 @@ def read_all(admin_code: str, db: Session = Depends(get_db)):
 
 
 @router.get("/{item_id}", response_model=schema.Customer)
-def read_one(item_id: int, db: Session = Depends(get_db)):
-    return controller.read_one(db=db, item_id=item_id)
+def read_one(item_id: int, password: str, db: Session = Depends(get_db)):
+    return controller.read_one(db=db, item_id=item_id, password=password)
 
 
 @router.put("/{item_id}", response_model=schema.Customer)
