@@ -4,11 +4,25 @@ from ..controllers import menu_item as controller
 from ..schemas import menu_item as schema
 from ..dependencies.database import engine, get_db
 
+from ..models import menu_item, resturant
+
+menu_item.Base.metadata.create_all(bind=engine)
+resturant.Base.metadata.create_all(bind=engine)
+
 router = APIRouter(
     tags=['MenuItem'],
     prefix="/menu_item"
 )
 
+@router.get("/", response_model=schema.MenuItems, status_code=status.HTTP_200_OK, tags=["MenuItem"])
+def get_menu_items_by_restaurant(restaurant_id: int, db: Session = Depends(get_db)):
+    db_menu_items = (
+        db.query(menu_item.MenuItem)
+        .join(resturant.Restaurant)
+        .filter(resturant.Restaurant.id == restaurant_id)
+        .all()
+    )
+    return db_menu_items
 
 @router.post("/", response_model=schema.MenuItems)
 def create(admin_code: str, request: schema.MenuItemCreate, db: Session = Depends(get_db)):
