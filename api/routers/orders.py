@@ -4,11 +4,11 @@ from ..controllers import orders as controller
 from ..schemas import orders as schema
 from ..dependencies.database import engine, get_db
 
+
 router = APIRouter(
     tags=['Orders'],
     prefix="/orders"
 )
-
 
 @router.post("/", response_model=schema.Order)
 def create(request: schema.OrderCreate, db: Session = Depends(get_db)):
