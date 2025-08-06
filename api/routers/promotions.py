@@ -28,3 +28,7 @@ def update(id: int, request: schema.PromotionUpdate, db: Session = Depends(get_d
 @router.delete("/{id}", response_model=schema.Promotion)
 def delete(id: int, db: Session = Depends(get_db)):
     return controller.delete(id=id, db=db)
+
+@router.get("/validate/{code}", response_model=schema.Promotion)
+def validate(code: str, db: Session = Depends(get_db)):
+    return controller.validate(code=code, db=db)
