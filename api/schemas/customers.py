@@ -9,7 +9,7 @@ class CustomerBase(BaseModel):
     phone: str
     address: str
 
-class CustomerCreate(BaseModel):
+class CustomerCreate(CustomerBase):
     pass
 
 class CustomerUpdate(BaseModel):

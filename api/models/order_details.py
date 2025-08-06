@@ -8,11 +8,11 @@ class OrderDetail(Base):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     order_id = Column(Integer, ForeignKey("orders.id"))
-    menu_item_id = Column(Integer, ForeignKey("menu_item.id"))
+    menu_item_id = Column(Integer, ForeignKey("menu_items.id"))
     amount = Column(Integer, index=True, nullable=False)
-    menu_item_name = Column(String, ForeignKey("menu_item.name"))
+    menu_item_name = Column(String, ForeignKey("menu_items.name"))
 
 
     orders = relationship("Order", back_populates="order_details")
-    menu_items_by_name = relationship("MenuItem", back_populates="order_details_by_name")
-    menu_items_by_id = relationship("MenuItem", back_populates="order_details_by_id")
+    menu_items_by_name = relationship("MenuItem", back_populates="order_details_by_name", foreign_keys=[menu_item_name])
+    menu_items_by_id = relationship("MenuItem", back_populates="order_details_by_id", foreign_keys=[menu_item_id])

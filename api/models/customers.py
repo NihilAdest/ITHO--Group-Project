@@ -16,3 +16,4 @@ class Customer(Base):
 
     orders_by_id = relationship("Order", back_populates="customers_by_id", foreign_keys=[Order.customer_id])
     orders_by_name = relationship("Order", back_populates="customers_by_name", foreign_keys=[Order.customer_name])
+    reviews = relationship("Review", back_populates="customer")

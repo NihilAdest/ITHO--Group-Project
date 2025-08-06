@@ -25,9 +25,9 @@ def create(db: Session, request):
     return new_item
 
 
-def read_all(db: Session, admin_code):
+def read_all(db: Session, admin_code: str):
     try:
-        if not admin_code == '2hot0utside':
+        if admin_code != '2hot0utside':
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Not authorized')
         result = db.query(model.Customer).all()
     except SQLAlchemyError as e:
@@ -36,14 +36,15 @@ def read_all(db: Session, admin_code):
     return result
 
 
-def read_one(db: Session, item_id, password):
+def read_one(db: Session, customer_id: int, password: str):
     try:
 
-        item = db.query(model.Customer).filter(model.Customer.id == item_id).first()
+        item = db.query(model.Customer).filter(model.Customer.id == customer_id).first()
         if not item:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
-        if (item.first().password != password) or (password != "2hot0utside"):
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Password mismatch')
+        if item.password != password:
+            if password != "2hot0utside":
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Password mismatch')
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
@@ -56,13 +57,16 @@ def update(db: Session, name, password, request):
         if not customer.first():
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Name not found!")
         if customer.first().password != password:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Password not match!")
+            if password != "2hot0utside":
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Password not match!")
         update_data = request.dict(exclude_unset=True)
         customer.update(update_data, synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+    db.commit()
+    db.refresh(customer.first())
     return customer.first()
 
 
@@ -72,7 +76,8 @@ def delete(db: Session, customer_name, customer_password):
         if not item.first():
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Name not found!")
         if item.first().password != customer_password:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Password not match!")
+            if customer_password != "2hot0utside":
+                raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Password not match!")
         item.delete(synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:

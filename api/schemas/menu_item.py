@@ -10,7 +10,7 @@ class MenuItemBase(BaseModel):
     food_category: str
 
 class MenuItemCreate(MenuItemBase):
-    pass
+    restaurant_id: int
 
 class MenuItemUpdate(MenuItemBase):
     name: Optional[str] = None
@@ -21,6 +21,7 @@ class MenuItemUpdate(MenuItemBase):
 
 class MenuItems(MenuItemBase):
     id: int
+    restaurant_id: int
 
     class Config:
         from_attributes = True
