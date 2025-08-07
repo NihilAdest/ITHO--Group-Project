@@ -23,7 +23,7 @@ class RestaurantUpdate(BaseModel):
 
 
 class Restaurant(RestaurantBase):
-    id: int
+    restaurant_id: int
 
     class Config:
         from_attributes = True

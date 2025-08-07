@@ -6,7 +6,7 @@ from ..dependencies.database import Base
 class Restaurant(Base):
     __tablename__ = "restaurants"
 
-    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    restaurant_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String(255), nullable=False)
     address = Column(String(255), nullable=False)
     phone_number = Column(String(255), nullable=False)

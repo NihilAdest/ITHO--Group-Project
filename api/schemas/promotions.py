@@ -3,12 +3,12 @@ from datetime import datetime
 from typing import Optional
 
 class PromotionBase(BaseModel):
-    description: Optional[str]
-    discount_type: Optional[str]
-    discount_value: Optional[float]
-    start_date: Optional[datetime]
-    expiration_date: Optional[datetime]
-    applicability: Optional[int]
+    description: str
+    discount_type: str
+    discount_value: float
+    start_date: datetime
+    expiration_date: datetime
+    applicability: int
 
 class PromotionCreate(PromotionBase):
     pass

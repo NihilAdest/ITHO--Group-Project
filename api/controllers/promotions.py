@@ -1,19 +1,19 @@
 from sqlalchemy.orm import Session
-from api.models.promotions import Promotion
+from api.models.promotions import Promotion as PromotionModel
 from api.schemas.promotions import Promotion, PromotionCreate, PromotionUpdate
 
 def create_promotion(db: Session, promotion: PromotionCreate):
-    new_promotion = Promotion(**promotion.dict())
+    new_promotion = PromotionModel(**promotion.dict())
     db.add(new_promotion)
     db.commit()
     db.refresh(new_promotion)
     return new_promotion
 
 def get_all_promotions(db: Session):
-    return db.query(Promotion).all()
+    return db.query(PromotionModel).all()
 
 def get_promotion_by_id(db: Session, promotion_id: int):
-    return db.query(Promotion).filter(Promotion.id == promotion_id).first()
+    return db.query(PromotionModel).filter(PromotionModel.id == promotion_id).first()
 
 def update_promotion(db: Session, promotion_id: int, promotion: PromotionUpdate):
     db_promo = get_promotion_by_id(db, promotion_id)

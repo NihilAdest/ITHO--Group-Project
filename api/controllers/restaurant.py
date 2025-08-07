@@ -22,14 +22,14 @@ def read_all(db: Session):
 
 
 def read_one(db: Session, restaurant_id: int):
-    item = db.query(Restaurant).filter(Restaurant.id == restaurant_id).first()
+    item = db.query(Restaurant).filter(Restaurant.restaurant_id == restaurant_id).first()
     if not item:
         raise HTTPException(status_code=404, detail="Restaurant not found")
     return item
 
 
 def update(db: Session, restaurant_id: int, request):
-    item = db.query(Restaurant).filter(Restaurant.id == restaurant_id)
+    item = db.query(Restaurant).filter(Restaurant.restaurant_id == restaurant_id)
     if not item.first():
         raise HTTPException(status_code=404, detail="Restaurant not found")
 
@@ -39,7 +39,7 @@ def update(db: Session, restaurant_id: int, request):
 
 
 def delete(db: Session, restaurant_id: int):
-    item = db.query(Restaurant).filter(Restaurant.id == restaurant_id)
+    item = db.query(Restaurant).filter(Restaurant.restaurant_id == restaurant_id)
     if not item.first():
         raise HTTPException(status_code=404, detail="Restaurant not found")
 

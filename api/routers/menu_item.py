@@ -14,12 +14,12 @@ router = APIRouter(
     prefix="/menu_item"
 )
 
-@router.get("/{restaurant}", response_model=schema.MenuItems, status_code=status.HTTP_200_OK, tags=["Menu Item"])
+@router.get("/{restaurant_id}", response_model=list[schema.MenuItems], status_code=status.HTTP_200_OK, tags=["Menu Item"])
 def get_menu_items_by_restaurant(restaurant_id: int, db: Session = Depends(get_db)):
     db_menu_items = (
         db.query(menu_item.MenuItem)
         .join(resturant.Restaurant)
-        .filter(resturant.Restaurant.id == restaurant_id)
+        .filter(resturant.Restaurant.restaurant_id == restaurant_id)
         .all()
     )
     return db_menu_items
@@ -34,16 +34,16 @@ def read_all(db: Session = Depends(get_db)):
     return controller.read_all(db=db)
 
 
-@router.get("/{item_id}", response_model=schema.MenuItems)
+@router.get("/by-name/{name}", response_model=schema.MenuItems)
 def read_one(name: str, db: Session = Depends(get_db)):
     return controller.read_one(db=db, name=name)
 
 
-@router.put("/{item_id}", response_model=schema.MenuItems)
+@router.put("/by-name/{name}", response_model=schema.MenuItems)
 def update(name: str, admin_code: str , request: schema.MenuItemUpdate, db: Session = Depends(get_db)):
     return controller.update(db=db, request=request, name=name, admin_code=admin_code)
 
 
-@router.delete("/{item_id}")
+@router.delete("/by-name/{name}", response_model=schema.MenuItems)
 def delete(name: str, admin_code: str, db: Session = Depends(get_db)):
     return controller.delete(db=db, name=name, admin_code=admin_code)

@@ -12,7 +12,7 @@ class MenuItem(Base):
     price = Column(DECIMAL(10,2))
     calories = Column(Integer)
     food_category = Column(String(255), nullable=False)
-    restaurant_id = Column(Integer, ForeignKey('restaurants.id'))
+    restaurant_id = Column(Integer, ForeignKey('restaurants.restaurant_id'))
 
     reviews = relationship("Review", back_populates="menu_item")
     order_details_by_name = relationship("OrderDetail", back_populates="menu_items_by_name", foreign_keys="[OrderDetail.menu_item_name]")
