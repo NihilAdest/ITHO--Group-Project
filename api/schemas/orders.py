@@ -3,8 +3,6 @@ from typing import Optional
 from pydantic import BaseModel
 from .order_details import OrderDetail
 
-
-
 class OrderBase(BaseModel):
     description: str
     tracking_id: str
