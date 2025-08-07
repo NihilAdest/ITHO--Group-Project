@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, ForeignKey, DATETIME
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from ..dependencies.database import Base
@@ -12,7 +12,7 @@ class Review(Base):
     menu_item_id = Column(Integer, ForeignKey("menu_items.id"))
     review_text = Column(String(255), nullable=False)
     rating = Column(Integer)
-    review_date = Column(DateTime, nullable=False, server_default=str(datetime.now()))
+    review_date = Column(DATETIME, nullable=False, server_default=str(datetime.now()))
 
     customer = relationship("Customer", back_populates="reviews")
     menu_item = relationship("MenuItem", back_populates="reviews")
