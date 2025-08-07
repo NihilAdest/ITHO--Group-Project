@@ -9,6 +9,7 @@ from api.routers.promotions import router as promotion_router
 from api.routers.recipes import router as recipe_router
 from api.routers.resources import router as resource_router
 from api.routers.restaurant import router as restaurant_router
+from api.routers.resource_management import router as resource_management_router
 
 app = FastAPI()
 
@@ -18,6 +19,7 @@ app.include_router(promotion_router)
 app.include_router(recipe_router)
 app.include_router(resource_router)
 app.include_router(restaurant_router)
+app.include_router(resource_management_router)
 
 
 app.add_middleware(
