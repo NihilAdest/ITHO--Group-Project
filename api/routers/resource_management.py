@@ -5,7 +5,7 @@ from ..schemas import resource_management as schema
 from ..dependencies.database import get_db
 
 router = APIRouter(
-    tags=["ResourceManagement"],
+    tags=["Resource Management"],
     prefix="/resource_management"
 )
 

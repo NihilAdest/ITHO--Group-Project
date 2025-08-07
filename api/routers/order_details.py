@@ -6,13 +6,13 @@ from ..dependencies.database import engine, get_db
 
 router = APIRouter(
     tags=['Order Details'],
-    prefix="/orderdetails"
+    prefix="/order_details"
 )
 
 
-@router.post("/", response_model=schema.OrderDetail)
-def create(request: schema.OrderDetailCreate, db: Session = Depends(get_db)):
-    return controller.create(db=db, request=request)
+@router.post("/", response_model=schema.OrderDetailOut)
+def create_order_detail(request: schema.OrderDetailCreate, db: Session = Depends(get_db)):
+    return controller.create(db, request)
 
 
 @router.get("/", response_model=list[schema.OrderDetail])

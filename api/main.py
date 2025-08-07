@@ -11,6 +11,7 @@ from api.routers.resources import router as resource_router
 from api.routers.restaurant import router as restaurant_router
 from api.routers.resource_management import router as resource_management_router
 from api.routers.menu_item import router as menu_item_router
+from api.routers.order_details import router as order_details
 
 app = FastAPI()
 
@@ -22,6 +23,7 @@ app.include_router(resource_router)
 app.include_router(restaurant_router)
 app.include_router(resource_management_router)
 app.include_router(menu_item_router)
+app.include_router(order_details)
 
 app.add_middleware(
     CORSMiddleware,

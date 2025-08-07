@@ -8,10 +8,17 @@ class OrderDetailBase(BaseModel):
     amount: int
 
 
-class OrderDetailCreate(OrderDetailBase):
+class OrderDetailCreate(BaseModel):
     order_id: int
     menu_item_id: int
-    menu_item_name: str
+    quantity: int
+    amount: float
+
+class OrderDetailOut(OrderDetailCreate):
+    id: int
+
+    class Config:
+        orm_mode = True
 
 class OrderDetailUpdate(BaseModel):
     order_id: Optional[int] = None
@@ -27,3 +34,5 @@ class OrderDetail(OrderDetailBase):
 
     class ConfigDict:
         from_attributes = True
+
+

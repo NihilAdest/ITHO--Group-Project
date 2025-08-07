@@ -10,8 +10,8 @@ menu_item.Base.metadata.create_all(bind=engine)
 resturant.Base.metadata.create_all(bind=engine)
 
 router = APIRouter(
-    tags=['MenuItem'],
-    prefix="/menu_item"
+    tags=['Menu Items'],
+    prefix="/menu_items"
 )
 
 @router.get("/{restaurant}", response_model=schema.MenuItems, status_code=status.HTTP_200_OK, tags=["MenuItem"])
