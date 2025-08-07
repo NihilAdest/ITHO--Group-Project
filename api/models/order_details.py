@@ -10,7 +10,7 @@ class OrderDetail(Base):
     order_id = Column(Integer, ForeignKey("orders.id"))
     menu_item_id = Column(Integer, ForeignKey("menu_items.id"))
     amount = Column(Integer, index=True, nullable=False)
-    menu_item_name = Column(String, ForeignKey("menu_items.name"))
+    menu_item_name = Column(String(100), ForeignKey("menu_items.name"))
 
 
     orders = relationship("Order", back_populates="order_details")

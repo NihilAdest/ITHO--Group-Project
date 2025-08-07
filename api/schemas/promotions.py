@@ -1,18 +1,23 @@
 from pydantic import BaseModel
 from datetime import datetime
+from typing import Optional
 
 class PromotionBase(BaseModel):
-    code: str
-    description: str
-    discount_percent: float
-    expiration_date: datetime
+    description: Optional[str]
+    discount_type: Optional[str]
+    discount_value: Optional[float]
+    start_date: Optional[datetime]
+    expiration_date: Optional[datetime]
+    applicability: Optional[int]
 
 class PromotionCreate(PromotionBase):
     pass
 
-class PromotionOut(PromotionBase):
+class PromotionUpdate(PromotionBase):
+    pass
+
+class Promotion(PromotionBase):
     id: int
-    is_active: bool
 
     class Config:
-        orm_mode = True
+        from_attributes = True

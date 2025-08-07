@@ -1,14 +1,21 @@
 import uvicorn
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import index as indexRoute
-from .models import model_loader
-from .dependencies.config import conf
+from api.routers import index as indexRoute
+from api.models import model_loader
+from api.dependencies.config import conf
 
+from api.routers.promotions import router as promotion_router
+from api.routers.recipes import router as recipe_router
+from api.routers.resources import router as resource_router
 
 app = FastAPI()
 
 origins = ["*"]
+
+app.include_router(promotion_router)
+app.include_router(recipe_router)
+app.include_router(resource_router)
 
 app.add_middleware(
     CORSMiddleware,
