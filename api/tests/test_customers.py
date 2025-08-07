@@ -10,9 +10,9 @@ def test_create_customer():
 
     sample_customer = {
         "name": f"Gray{unique_id}",
-        "password": "password123",
+        "password": "Breego9419088!",
         "email": f"GrayG{unique_id}@example.com",
-        "phone": "1234567890",
+        "phone": "123-456-7890",
         "address": "1234 ITHO Blvd."
     }
 

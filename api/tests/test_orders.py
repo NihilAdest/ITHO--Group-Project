@@ -7,21 +7,21 @@ client = TestClient(app)
 def test_create_order():
     sample_customer = {
         "id": 1,
-        "name": "TestCustomer",
-        "password": "test123",
-        "email": "test@example.com",
-        "phone": "1234567890",
-        "address": "123 Test Lane"
+        "name": "Gray Gonzalez",
+        "password": "Breego9419088!",
+        "email": "GrayG@example.com",
+        "phone": "123-456-7890",
+        "address": "1234 ITHO Blvd."
     }
     client.post("/customers/", json=sample_customer)
 
     sample_order = {
         "customer_id": 1,
-        "customer_name": "TestCustomer",
-        "description": "Test order for unit testing",
+        "customer_name": "Gray Gonzalez",
+        "description": "Wants the ITHO Burger with a side of small fries.",
         "tracking_id": "track-1234",
         "status": "Pending",
-        "total_price": 49.99
+        "total_price": 19.99
     }
 
     response = client.post("/orders/", json=sample_order)

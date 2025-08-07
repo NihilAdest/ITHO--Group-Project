@@ -5,6 +5,7 @@ import random
 client = TestClient(app)
 
 def test_create_menu_item():
+    # this will generate a random number in case of duplicates
     unique_id = random.randint(1000, 9999)
 
     sample_item = {
