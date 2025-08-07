@@ -11,10 +11,10 @@ resturant.Base.metadata.create_all(bind=engine)
 
 router = APIRouter(
     tags=['Menu Items'],
-    prefix="/menu_items"
+    prefix="/menu_item"
 )
 
-@router.get("/{restaurant}", response_model=schema.MenuItems, status_code=status.HTTP_200_OK, tags=["MenuItem"])
+@router.get("/{restaurant}", response_model=schema.MenuItems, status_code=status.HTTP_200_OK, tags=["Menu Item"])
 def get_menu_items_by_restaurant(restaurant_id: int, db: Session = Depends(get_db)):
     db_menu_items = (
         db.query(menu_item.MenuItem)

@@ -14,8 +14,11 @@ class OrderDetailCreate(BaseModel):
     quantity: int
     amount: float
 
-class OrderDetailOut(OrderDetailCreate):
-    id: int
+class OrderDetailOut(BaseModel):
+    order_id: int
+    menu_item_id: int
+    quantity: int
+    amount: float
 
     class Config:
         orm_mode = True
