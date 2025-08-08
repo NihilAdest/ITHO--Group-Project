@@ -14,7 +14,7 @@ router = APIRouter(
     prefix="/menu_item"
 )
 
-@router.get("/{restaurant_id}", response_model=list[schema.MenuItems], status_code=status.HTTP_200_OK, tags=["Menu Item"])
+@router.get("/{restaurant_id}", response_model=list[schema.MenuItems], status_code=status.HTTP_200_OK)
 def get_menu_items_by_restaurant(restaurant_id: int, db: Session = Depends(get_db)):
     db_menu_items = (
         db.query(menu_item.MenuItem)

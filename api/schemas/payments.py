@@ -7,7 +7,7 @@ class PaymentBase(BaseModel):
     card_no: str
     transaction_status: str
 
-class PaymentCreate(BaseModel):
+class PaymentCreate(PaymentBase):
     order_id: int
     amount: float
 
